@@ -1,0 +1,12 @@
+province: pencere=8, model=XGBoost, eğitim=69317, doğrulama=11624
+Doğrulama RMSE 4.7134
+province: pencere=8, model=LSTM, eğitim=69317, doğrulama=11624
+Doğrulama RMSE 4.6481
+province: pencere=16, model=XGBoost, eğitim=69317, doğrulama=11624
+Doğrulama RMSE 4.3766
+province: pencere=16, model=LSTM, eğitim=69317, doğrulama=11624
+Doğrulama RMSE 4.5047
+province: pencere=24, model=XGBoost, eğitim=69317, doğrulama=11624
+Doğrulama RMSE 4.3312
+province: pencere=24, model=LSTM, eğitim=69317, doğrulama=11624
+Doğrulama RMSE 4.2684

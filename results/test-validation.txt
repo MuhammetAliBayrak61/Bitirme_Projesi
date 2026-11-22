@@ -1,0 +1,16 @@
+test_disjoint_spatial_outputs (test_research.CalendarTests.test_disjoint_spatial_outputs) ... ok
+test_no_future_features_and_preserve_gap (test_research.CalendarTests.test_no_future_features_and_preserve_gap) ... ok
+test_saved_models_reproduce_published_forecasts (test_research.CalendarTests.test_saved_models_reproduce_published_forecasts) ... ok
+test_year_boundary (test_research.CalendarTests.test_year_boundary) ... ok
+test_environment_reports_incompatible_initializer_version (test_updates.UpdateTests.test_environment_reports_incompatible_initializer_version) ... ok
+test_new_forecasts_have_version_and_quality (test_updates.UpdateTests.test_new_forecasts_have_version_and_quality) ... ok
+test_paired_features_use_identical_observations (test_updates.UpdateTests.test_paired_features_use_identical_observations) ... ok
+test_province_models_reload (test_updates.UpdateTests.test_province_models_reload) ... ok
+test_province_observation_quality (test_updates.UpdateTests.test_province_observation_quality) ... ok
+test_saved_common_model (test_updates.UpdateTests.test_saved_common_model) ... ok
+test_summer_holdout_is_disjoint (test_updates.UpdateTests.test_summer_holdout_is_disjoint) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 2.580s
+
+OK

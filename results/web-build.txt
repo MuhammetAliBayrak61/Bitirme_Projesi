@@ -1,0 +1,16 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> lst-turkiye@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v6.3.5 building for production...
+transforming...
+✓ 30 modules transformed.
+rendering chunks...
+[plugin vite:singlefile] 
+
+[plugin vite:singlefile] Inlining: index-CQX7_hjV.js
+[plugin vite:singlefile] Inlining: style-Ci2sEEXv.css
+computing gzip size...
+dist/index.html  4,150.12 kB │ gzip: 515.73 kB
+✓ built in 879ms

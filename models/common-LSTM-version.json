@@ -1,0 +1,12 @@
+{
+  "version": "c939d1acde30b3ee22e7c5fe9fc9c1b447e98a0e0e7250912f4a5379b34ffba0",
+  "trained_at": "2026-11-11T21:03:09.376599+00:00",
+  "training_end_year": 2022,
+  "archive_end": "2025-12-27",
+  "model": "LSTM",
+  "mode": "common",
+  "scope": "point",
+  "features": [
+    "lst"
+  ]
+}

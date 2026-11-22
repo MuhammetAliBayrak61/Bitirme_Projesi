@@ -1,0 +1,10 @@
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+waiting for server to start.... done
+server started
+uni 24 16
+multi 24 16
+common 24 16
+province 648 648
+Batch tahmin, snapshot, PostGIS yayını ve 648 API tahmini doğrulandı.
+81 il haritası, tarih/model/ufuk seçimi ve çevrimdışı/API modları geçti.

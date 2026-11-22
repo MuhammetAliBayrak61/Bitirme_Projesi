@@ -1,0 +1,18 @@
+{
+  "version": "d142884b6e13459d380345a660c47abc754bc0b54c821c5a17fcd21d68060588",
+  "trained_at": "2026-11-11T21:11:09.722111+00:00",
+  "training_end_year": 2022,
+  "archive_end": "2025-12-27",
+  "model": "XGBoost",
+  "mode": "multi",
+  "scope": "point",
+  "features": [
+    "lst",
+    "ndvi",
+    "ndbi",
+    "height",
+    "slope",
+    "air",
+    "dew"
+  ]
+}

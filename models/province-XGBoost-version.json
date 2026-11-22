@@ -1,0 +1,12 @@
+{
+  "version": "3dbea3c085c552255453fd5c689989cb09089c6ca1347648d3baceeac686b4e4",
+  "trained_at": "2026-11-22T11:21:06.015234+00:00",
+  "training_end_year": 2022,
+  "archive_end": "2025-12-27",
+  "model": "XGBoost",
+  "mode": "province",
+  "scope": "province",
+  "features": [
+    "lst"
+  ]
+}

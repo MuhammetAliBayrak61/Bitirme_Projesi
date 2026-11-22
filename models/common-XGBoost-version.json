@@ -1,0 +1,12 @@
+{
+  "version": "1d73a1f5d1aed43cc7c0228bc508bba83fa229684a5316095e950484da3c202b",
+  "trained_at": "2026-11-11T21:03:09.887077+00:00",
+  "training_end_year": 2022,
+  "archive_end": "2025-12-27",
+  "model": "XGBoost",
+  "mode": "common",
+  "scope": "point",
+  "features": [
+    "lst"
+  ]
+}

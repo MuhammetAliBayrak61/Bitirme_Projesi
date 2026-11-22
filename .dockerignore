@@ -1,0 +1,11 @@
+cache
+models
+results
+data
+api/bin
+api/obj
+web/node_modules
+web/dist
+.venv
+.git
+install-log.txt
