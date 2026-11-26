@@ -1,0 +1,9 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Lst.Api -> /workspace/scratch/b53d898cced8/improvements/api/bin/Debug/net10.0/Lst.Api.dll
+  Lst.Api.Tests -> /workspace/scratch/b53d898cced8/improvements/api.Tests/bin/Debug/net10.0/Lst.Api.Tests.dll
+Test run for /workspace/scratch/b53d898cced8/improvements/api.Tests/bin/Debug/net10.0/Lst.Api.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 565 ms - Lst.Api.Tests.dll (net10.0)
+VSTEST_ARTIFACTS_DIRECTORY environment variable was not found, falling back to a user-private temporary directory. This is most likely caused by an outdated Microsoft.NET.Test.Sdk package reference in the test project.

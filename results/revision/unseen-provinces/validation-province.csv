@@ -1,0 +1,3 @@
+model,window,validation_rmse
+XGBoost,24,4.336574261331236
+LSTM,24,4.228113219041827

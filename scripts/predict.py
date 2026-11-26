@@ -10,30 +10,39 @@ import numpy as np
 import pandas as pd
 from xgboost import XGBRegressor
 from forecast import calendar
-from registry import verify
+from registry import verify, validate_preprocess
+from data_quality import validate
 
-def forecast(path,mode):
-    frame=pd.read_csv(path,parse_dates=["date"])
-    if frame.duplicated(["city","date"]).any():
-        raise ValueError("Tekrarlanan il ve dönem.")
+def forecast(path,mode,models_dir="models",*,latest_valid=False):
+    from pathlib import Path
+    frame=validate(pd.read_csv(path),mode)
     output=[]
     for name in ["XGBoost","LSTM"]:
-        verify(mode,name)
-        base=f"models/{mode}-{name}"
+        record=verify(mode,name,Path(models_dir))
+        base=f"{models_dir}/{mode}-{name}"
         meta=joblib.load(base+"-preprocess.joblib")
+        validate_preprocess(meta,record)
         if name=="LSTM":
             model=keras.models.load_model(base+".keras",compile=False)
         else:
             model=XGBRegressor()
             model.load_model(base+".json")
+        expected=(meta["window"],2*len(meta["features"])+1)
+        if name=="LSTM" and tuple(model.input_shape[1:])!=expected:
+            raise ValueError("LSTM giriş şekli manifest ile uyuşmuyor")
+        if name=="XGBoost" and model.n_features_in_!=expected[0]*expected[1]:
+            raise ValueError("XGBoost giriş genişliği manifest ile uyuşmuyor")
         inputs=[]
         records=[]
         for city,group in frame.groupby("city"):
-            last=group.date.max()
+            valid=group.loc[group.lst.notna(),"date"]
+            if valid.empty: continue
+            last=valid.max() if latest_valid else group.date.max()
             dates=calendar(last.year)
             index=dates.get_loc(last)
             features=meta["features"]
             window_size=meta["window"]
+            if index+1<window_size: continue
             series=group.set_index("date").reindex(dates)[features]
             if not series.lst.iloc[max(0,index-3):index+1].notna().any():
                 continue

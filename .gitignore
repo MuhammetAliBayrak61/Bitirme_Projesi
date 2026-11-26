@@ -1,5 +1,18 @@
 .venv/
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+service-account*.json
+.venv-*/
+releases/
+backups/
+*.log
+api.Tests/bin/
+api.Tests/obj/
+TestResults/
 cache/
 __pycache__/
 *.pyc
@@ -8,3 +21,6 @@ web/dist/
 api/bin/
 api/obj/
 api/wwwroot/
+candidates/
+web/test-results/
+web/playwright-report/

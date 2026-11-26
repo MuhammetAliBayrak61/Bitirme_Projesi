@@ -1,0 +1,21 @@
+{
+  "source": "Planetary Computer",
+  "product": "MOD11A2.061 Terra",
+  "years": [
+    2026
+  ],
+  "downloaded_at": "2026-11-22T23:05:47.277610+00:00",
+  "items": 240,
+  "failures": [],
+  "seconds": 380.1051188560001,
+  "qc": "mandatory<=1,data_quality=0,LST_error<=2K; -90..85C; province_valid_fraction>=0.5",
+  "status": "validated_candidate",
+  "source_file": "results/revision/incoming/province-modis-2026.csv",
+  "sha256": "85443be59bd16fcbb387b5c2e48a0b4b19fc78063174fe180995970e3d137dbf",
+  "rows": 30864,
+  "cities": 81,
+  "first_date": "2018-01-01",
+  "last_date": "2026-11-09",
+  "valid_lst": 30265,
+  "missing_lst": 599
+}

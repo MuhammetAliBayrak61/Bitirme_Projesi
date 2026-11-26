@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-11-23T21:52:21.548979+00:00",
+  "source": "Beck et al. 2018, Köppen–Geiger 1980–2016",
+  "doi": "10.6084/m9.figshare.6396959.v2",
+  "paper": "10.1038/sdata.2018.214",
+  "license": "CC BY 4.0",
+  "raster_sha256": "a343fdfdb4c4a427c774bedd75ae4f2a6420c3f465de7d51892e8712dfaa2d27",
+  "crop_sha256": "d1500e3e5c53a7570e2a7c069b71634cd4f65687975b8ad777cc6ab3aca02320",
+  "boundaries_sha256": "c88abb42790eabf40e82aaff9c66e5bf038caf36cb62c1eecc92cfc1ba586110",
+  "resolution_degrees": [
+    0.008333333333333333,
+    0.008333333333333333
+  ],
+  "method": "Pixel-centre boundary assignment; spherical area-weighted majority class per province; pooled metrics on matched targets.",
+  "limitations": [
+    "Not an official MGM classification; Natural Earth simplified boundaries.",
+    "A province may span multiple classes; fractions retained. Static 1980–2016 baseline.",
+    "Stratified temporal test, not leave-climate-zone-out validation. Classes with <5 cities flagged."
+  ],
+  "matching": [
+    {
+      "period": "2024-2025",
+      "matched_targets": 21940,
+      "models": [
+        "LSTM",
+        "XGBoost",
+        "SeasonalNaive"
+      ]
+    },
+    {
+      "period": "2026",
+      "matched_targets": 7156,
+      "models": [
+        "LSTM",
+        "XGBoost",
+        "SeasonalNaive"
+      ]
+    }
+  ],
+  "reproducibility": "Recomputed from distributed Turkey crop; all classification fractions and model scores equal to original global raster run."
+}

@@ -1,0 +1,5 @@
+{
+  "thermal_groups": "Unsupervised grouping from 2018\u20132022 province mean LST and seasonal amplitude, not official climate zones.",
+  "temporal_aggregation": "Unweighted mean of 81 city RMSE values for each horizon; not pooled RMSE.",
+  "benchmark": "Same host, 2 local Spark threads, actual 2,666,362 pixels from 18 scenes; warm median from repeats 1 and 2."
+}

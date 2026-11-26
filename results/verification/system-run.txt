@@ -1,0 +1,17 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+Running 5 tests using 1 worker
+
+(node:192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"scenario":"first_load_and_keyboard_switch","elapsed_ms":383}
+  ✓  1 tests/atlas.spec.ts:2:1 › API mode loads only one province and presents release, scope and legend (428ms)
+  ✓  2 tests/atlas.spec.ts:30:1 › new province year remains distinct from the point series year (245ms)
+  ✓  3 tests/atlas.spec.ts:63:1 › API failure shows an actionable error, without stale province results (269ms)
+  ✓  4 tests/atlas.spec.ts:82:1 › mobile retains province selection and the temperature legend (217ms)
+  ✓  5 tests/atlas.spec.ts:98:1 › archive toggle keeps historical forecasts separate (665ms)
+
+  5 passed (2.9s)
+{"status": "passed", "checks": 10, "release_id": "2026-11-23T06-41-02.888387+00-00-321327af", "cities": 81, "forecasts": 648}

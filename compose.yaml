@@ -23,7 +23,7 @@ services:
       PGDATABASE: lst
       PGPASSWORD: ${LST_DB_PASSWORD}
       DATABASE_URL: ""
-    command: ["sh","-c","pip install --quiet 'psycopg[binary]>=3.2,<4' && python scripts/publish.py"]
+    command: ["sh","-c","pip install --quiet 'psycopg[binary]==3.3.8' && python scripts/publish.py --snapshot release/snapshot.json --initialize --seed-only"]
     depends_on:
       db:
         condition: service_healthy

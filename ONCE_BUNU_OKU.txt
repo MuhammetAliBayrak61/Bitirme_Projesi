@@ -1,0 +1,19 @@
+Bitirme Projesi — 24 Kasım 2026 inceleme paketi
+
+1. ZIP dosyasını YENİ bir klasöre tamamen çıkar.
+2. Hemen incelemek için Atlas_2026_Aday.html dosyasını tarayıcıda aç.
+3. Kurulum: README.md ve CALISTIRMA.md.
+4. Otuz düzeltme ve on beş işin durumu: DUZELTME_TAKIBI.md.
+5. Deney raporu: DENEY_RAPORU.md. Sunum metni: docs/SUNUM.md (PPTX değildir).
+6. GEE kurulumu: docs/GEE_KURULUM.md; kendi hesabında giriş yapmalısın.
+
+32 Python, 6 .NET, 5 tarayıcı testi; 10 HTTP kontrolü geçti. Bağımsız HTML ve izole PostgreSQL/PostGIS doğrulaması da yapıldı. 2026 verisi aday klasördedir. C/D gerçek verisi üretilmedi; Earth Engine erişimi bekleniyor. Windows/Docker/Airflow/GitHub CI çalıştırması bekliyor.
+
+Bu ZIP .git klasörü içermez; kaynak kod, kayıtlı modeller, veri ve yeni deney çıktıları içerir. Mevcut proje klasörünün üzerine çıkarmayın. KOD_DEGISIKLIKLERI.patch yalnızca kod/konfigürasyon/belge farkıdır; yeni deney verileri ve HTML ayrıca ZIP içinde bulunur. Yamanın temiz başlangıç dosyalarına uygulanabilirliği git apply --check ile doğrulandı; kullanıcı deposuna uygulanmadı.
+
+Yerel geliştirme dalı: gelistirme-testleri
+Başlangıç: c45f2c2d156184369f73340d2f4a236dfb8062a1
+Son yerel commit: d2037036fd45c1c97f1f6e4ec91b0c16a10161e7
+Git push yapılmadı. Mevcut veri/model/eski sonuçlardan 150 dosya hash kontrolüyle korundu. Kullanıcının veritabanına yazılmadı.
+
+Orijinal Atlas.html korunmuş eski rapordur. Atlas_2026_Aday.html yeni aday rapordur; açılması hiçbir veriyi yayımlamaz. Büyük ham piksel CSV'si, paketler ve önbellekler ZIP'e eklenmedi; kaynak listeleri ve üretim kodu bulunur.

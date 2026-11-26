@@ -1,0 +1,10 @@
+{
+  "time": "2026-11-22T23:15:34.401498+00:00",
+  "input_sha256": "fd9d85f38083587f0677737a92babac6808a981b20c8ff0ce0dd290ec2de6d40",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "logical_cpus": 9,
+  "spark_threads": 2,
+  "source": "distinct real MODIS pixels; never duplicated to inflate row count",
+  "method": "read CSV + group city/date + mean LST + materialize output; no persisted Spark cache"
+}

@@ -1,0 +1,20 @@
+{
+  "version": "0ded63f98c635640cfed900e3fe459dd224fc4980873122b89f5c3388c104fc9",
+  "trained_at": "2026-11-22T23:09:09.659446+00:00",
+  "training_end_year": 2022,
+  "archive_end": "2025-12-27",
+  "model": "XGBoost",
+  "mode": "province",
+  "scope": "province",
+  "features": [
+    "lst"
+  ],
+  "schema_version": 2,
+  "files": {
+    "province-XGBoost.json": "539a8d967c5de7d886a295f1e941abdb66ae506e08572460c735d1f12596e4e8",
+    "province-XGBoost-preprocess.joblib": "d564e5ee47d910c404f1cb19188eaa2e70d83949f6c83557888bdd72158e06b7"
+  },
+  "window": 24,
+  "input_width": 3,
+  "training_data_sha256": "41543010cb4f8648b23a7bb6431950003c4646f7f9ff643193761c1abe9864b6"
+}

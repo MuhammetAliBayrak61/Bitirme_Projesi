@@ -1,0 +1,37 @@
+test_atomic_json_rejects_nan_without_replacing (test_integrity.IntegrityTests.test_atomic_json_rejects_nan_without_replacing) ... ok
+test_bad_preprocessing_width_rejected (test_integrity.IntegrityTests.test_bad_preprocessing_width_rejected) ... ok
+test_bad_quality_rejected (test_integrity.IntegrityTests.test_bad_quality_rejected) ... ok
+test_database_failure_preserves_previous_pointer_and_snapshot (test_integrity.IntegrityTests.test_database_failure_preserves_previous_pointer_and_snapshot) ... ok
+test_duplicate_date_rejected (test_integrity.IntegrityTests.test_duplicate_date_rejected) ... ok
+test_invalid_json_rejected (test_integrity.IntegrityTests.test_invalid_json_rejected) ... ok
+test_invalid_period_and_unsorted_rejected (test_integrity.IntegrityTests.test_invalid_period_and_unsorted_rejected) ... ok
+test_missing_manifest_rejected (test_integrity.IntegrityTests.test_missing_manifest_rejected) ... ok
+test_missing_period_preserved (test_integrity.IntegrityTests.test_missing_period_preserved) ... ok
+test_missing_weights_rejected (test_integrity.IntegrityTests.test_missing_weights_rejected) ... ok
+test_new_2026_data_and_last_valid_origin (test_integrity.IntegrityTests.test_new_2026_data_and_last_valid_origin) ... ok
+test_offline_html_hash_required_before_activation (test_integrity.IntegrityTests.test_offline_html_hash_required_before_activation) ... ok
+test_tampered_weights_or_preprocessor_rejected (test_integrity.IntegrityTests.test_tampered_weights_or_preprocessor_rejected) ... ok
+test_wrong_scope_or_features_rejected (test_integrity.IntegrityTests.test_wrong_scope_or_features_rejected) ... ok
+test_disjoint_spatial_outputs (test_research.CalendarTests.test_disjoint_spatial_outputs) ... ok
+test_no_future_features_and_preserve_gap (test_research.CalendarTests.test_no_future_features_and_preserve_gap) ... ok
+test_saved_models_reproduce_published_forecasts (test_research.CalendarTests.test_saved_models_reproduce_published_forecasts) ... ok
+test_year_boundary (test_research.CalendarTests.test_year_boundary) ... ok
+test_environment_reports_incompatible_initializer_version (test_updates.UpdateTests.test_environment_reports_incompatible_initializer_version) ... ok
+test_new_forecasts_have_version_and_quality (test_updates.UpdateTests.test_new_forecasts_have_version_and_quality) ... ok
+test_paired_features_use_identical_observations (test_updates.UpdateTests.test_paired_features_use_identical_observations) ... ok
+test_province_models_reload (test_updates.UpdateTests.test_province_models_reload) ... ok
+test_province_observation_quality (test_updates.UpdateTests.test_province_observation_quality) ... ok
+test_saved_common_model (test_updates.UpdateTests.test_saved_common_model) ... ok
+test_summer_holdout_is_disjoint (test_updates.UpdateTests.test_summer_holdout_is_disjoint) ... ok
+test_archive_outputs_unchanged_by_2026_candidate (test_validation.ValidationTests.test_archive_outputs_unchanged_by_2026_candidate) ... ok
+test_dynamic_world_requires_probability_mass (test_validation.ValidationTests.test_dynamic_world_requires_probability_mass) ... ok
+test_era5_kelvin_or_wrong_dewpoint_rejected (test_validation.ValidationTests.test_era5_kelvin_or_wrong_dewpoint_rejected) ... ok
+test_inner_folds_keep_repeated_sites_together (test_validation.ValidationTests.test_inner_folds_keep_repeated_sites_together) ... ok
+test_missing_features_reported_not_imputed (test_validation.ValidationTests.test_missing_features_reported_not_imputed) ... ok
+test_modis_qc_bits_and_temperature_range (test_validation.ValidationTests.test_modis_qc_bits_and_temperature_range) ... ok
+test_no_new_data_short_circuits (test_validation.ValidationTests.test_no_new_data_short_circuits) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 5.441s
+
+OK

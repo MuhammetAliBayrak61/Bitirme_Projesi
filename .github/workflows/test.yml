@@ -1,23 +1,93 @@
-name: Model ve arayüz doğrulama
+name: Model, API, veri ve arayüz doğrulama
 on: [push, pull_request]
+permissions:
+  contents: read
 jobs:
-  archive:
-    runs-on: ubuntu-latest
+  python:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     env:
       KERAS_BACKEND: jax
       OPENBLAS_NUM_THREADS: '1'
+      PYTHONIOENCODING: utf-8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: pip
-      - run: python -m pip install -r requirements.txt
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python scripts/check_environment.py --report results/ci-environment.json
       - run: python -m unittest discover -s tests -v
+      - run: python -m ruff check scripts tests --select E9,F63,F7,F82
+      - run: python -m pip_audit -r requirements.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: environment-${{ matrix.os }}
+          path: results/ci-environment.json
+  api:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_DB: lst_test
+          POSTGRES_USER: lst_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: ['5432:5432']
+        options: --health-cmd "pg_isready -U lst_test" --health-interval 5s --health-timeout 5s --health-retries 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - run: npm ci && npm run build
+      - run: dotnet test api.Tests --logger trx
+      - run: dotnet list api package --vulnerable --include-transitive
+      - run: python -m pip install 'psycopg[binary]==3.3.8'
+      - run: python scripts/publish.py --snapshot release/snapshot.json --initialize --seed-only
+        env:
+          DATABASE_URL: postgresql://lst_test@localhost:5432/lst_test
+      - run: npm ci && npm run build && npx playwright install --with-deps chromium
         working-directory: web
+      - run: npm audit --audit-level=high
+        working-directory: web
+      - run: |
+          mkdir -p api/wwwroot
+          cp -a web/dist/. api/wwwroot/
+          dotnet run --project api --no-launch-profile > api-test.log 2>&1 &
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:5274/health; then break; fi
+            sleep 1
+          done
+          python scripts/test_api.py
+          cd web
+          npm run test:ui
+        env:
+          ConnectionStrings__Lst: Host=localhost;Database=lst_test;Username=lst_test
+          ASPNETCORE_URLS: http://127.0.0.1:5274
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-web-results
+          path: |
+            api.Tests/TestResults
+            results/verification/web-tests.json
+            api-test.log
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t lst-ci .
+      - run: docker build -f airflow/Dockerfile -t lst-airflow-ci .

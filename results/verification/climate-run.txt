@@ -1,0 +1,8 @@
+climate
+BSk    17
+Cfa     2
+Cfb     4
+Csa    30
+Dfb     7
+Dsa     4
+Dsb    17
