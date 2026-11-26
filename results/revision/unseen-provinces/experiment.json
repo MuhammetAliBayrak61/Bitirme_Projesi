@@ -1,0 +1,24 @@
+{
+  "mode": "province",
+  "data": "data/province-modis.csv",
+  "data_sha256": "41543010cb4f8648b23a7bb6431950003c4646f7f9ff643193761c1abe9864b6",
+  "features": [
+    "lst"
+  ],
+  "start_year": 2018,
+  "train_end": 2022,
+  "validation_end": 2023,
+  "test_end": 2025,
+  "windows": [
+    24
+  ],
+  "epochs": 15,
+  "seed": 42,
+  "created_at": "2026-11-22T23:09:17.784721+00:00",
+  "model_selection": "validation_only",
+  "holdout_cities": [
+    "Antalya",
+    "Erzurum",
+    "İstanbul"
+  ]
+}

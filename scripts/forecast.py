@@ -35,20 +35,31 @@ def samples(df,features,cutoff,window):
                 targets.append(y)
                 meta.append((city,dates[i],dates[target],h,data.lst.iloc[target-46],i==last))
     return np.array(seq,dtype="float32"),np.array(targets),pd.DataFrame(meta,columns=["city","origin","date","h","baseline","latest"])
-def run(path,mode,windows,epochs):
+def run(path,mode,windows,epochs,*,start_year=None,train_end=None,val_end=2023,test_end=None,out=None,holdout_cities=()):
+    from data_quality import validate
+    from provenance import atomic_json, now
     df=pd.read_csv(path,parse_dates=["date"]).sort_values(["city","date"])
     if df.duplicated(["city","date"]).any(): raise ValueError("Bir il ve tarih için tek seri gerekli.")
     features=["lst"] if mode in ("uni","common","province") else ["lst","ndvi","ndbi","height","slope","air","dew"]
-    endtrain=2021 if mode=="uni" else 2022
-    df=df[df.date.dt.year.between(2003 if mode=="uni" else 2018,2025)]
+    df=validate(df,mode)
+    endtrain=train_end if train_end is not None else (2021 if mode=="uni" else 2022)
+    start_year=start_year if start_year is not None else (2003 if mode=="uni" else 2018)
+    test_end=test_end if test_end is not None else int(df.date.dt.year.max())
+    if not start_year<=endtrain<val_end<test_end:
+        raise ValueError("Ayrım sırası: başlangıç <= eğitim sonu < doğrulama sonu < test sonu")
+    df=df[df.date.dt.year.between(start_year,test_end)]
     winners={}
     validation=[]
-    results=Path("results")
+    results=Path(out or ("results/training-"+now().replace(":","-")))
+    results.mkdir(parents=True,exist_ok=False)
+    models=results/"models";models.mkdir()
     for w in windows:
         X,y,m=samples(df,features,endtrain,w)
         year=m.date.dt.year
-        train=(year<=endtrain)&np.isfinite(y)
-        val=year.between(endtrain+1,2023)&np.isfinite(y)&m.baseline.notna()
+        seen=~m.city.isin(holdout_cities)
+        test_cities=m.city.isin(holdout_cities) if holdout_cities else pd.Series(True,index=m.index)
+        train=(year<=endtrain)&np.isfinite(y)&seen
+        val=year.between(endtrain+1,val_end)&np.isfinite(y)&m.baseline.notna()&seen
         if not train.any() or not val.any(): raise ValueError("Eğitim/doğrulama gözlemi eksik.")
         width=X.shape[-1]
         scaler=StandardScaler().fit(X[train].reshape(-1,width))
@@ -75,19 +86,19 @@ def run(path,mode,windows,epochs):
             validation.append(dict(model=name,window=w,validation_rmse=score))
             if score>=winners.get(name,(np.inf,))[0]: continue
             # Model seçimi yalnızca doğrulama puanını okur.
-            pathbase=f"models/{mode}-{name}"
+            pathbase=str(models/f"{mode}-{name}")
             if name=="LSTM": model.save(pathbase+".keras")
             else: model.save_model(pathbase+".json")
             joblib.dump(dict(scaler=scaler,center=center,scale=scale,window=w,features=features),pathbase+"-preprocess.joblib")
             from registry import register
-            register(mode,name,"province" if mode=="province" else "point",endtrain,df.date.max(),features)
-            mask=(year.between(2024,2025)&np.isfinite(y)&m.baseline.notna())|m.latest
+            register(mode,name,"province" if mode=="province" else "point",endtrain,df.date.max(),features,w,path,models)
+            mask=((year.between(val_end+1,test_end)&np.isfinite(y)&m.baseline.notna())|m.latest)&test_cities
             out=m[mask].copy()
             out["actual"]=y[mask]; out["prediction"]=predict(mask); out["model"]=name
             winners[name]=(score,out)
     pred=pd.concat([r[1] for r in winners.values()])
     pred[pred.latest].to_csv(results/f"future-{mode}.csv",index=False)
-    test=pred[pred.date.dt.year.between(2024,2025)&pred.actual.notna()&pred.baseline.notna()].copy()
+    test=pred[pred.date.dt.year.between(val_end+1,test_end)&pred.actual.notna()&pred.baseline.notna()].copy()
     baseline=test[test.model=="XGBoost"].copy()
     baseline["model"]="SeasonalNaive"; baseline["prediction"]=baseline.baseline
     test=pd.concat([test,baseline],ignore_index=True)
@@ -99,10 +110,21 @@ def run(path,mode,windows,epochs):
         report.append(dict(city=city,h=int(h),model=model,change_pct=100*(1-stats["rmse"]/ref) if ref else None,**stats))
     (results/f"temporal-{mode}.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf8")
     pd.DataFrame(validation).to_csv(results/f"validation-{mode}.csv",index=False)
+    from registry import sha256
+    atomic_json(results/"experiment.json",dict(mode=mode,data=str(path),data_sha256=sha256(path),
+        features=features,start_year=start_year,train_end=endtrain,validation_end=val_end,test_end=test_end,
+        windows=windows,epochs=epochs,seed=42,created_at=now(),model_selection="validation_only",holdout_cities=list(holdout_cities)))
 if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("--data",default="data/modis.csv")
     p.add_argument("--mode",choices=["uni","multi","common","province"],default="uni")
     p.add_argument("--windows",type=int,nargs="+",default=[8,16,24])
     p.add_argument("--epochs",type=int,default=15)
-    a=p.parse_args(); run(a.data,a.mode,a.windows,a.epochs)
+    p.add_argument("--start-year",type=int)
+    p.add_argument("--train-end",type=int)
+    p.add_argument("--val-end",type=int,default=2023)
+    p.add_argument("--test-end",type=int)
+    p.add_argument("--out",type=Path)
+    p.add_argument("--holdout-cities",nargs="*",default=[])
+    a=p.parse_args(); run(a.data,a.mode,a.windows,a.epochs,start_year=a.start_year,train_end=a.train_end,
+                        val_end=a.val_end,test_end=a.test_end,out=a.out,holdout_cities=a.holdout_cities)

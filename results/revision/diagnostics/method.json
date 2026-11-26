@@ -1,0 +1,8 @@
+{
+  "created_at": "2026-11-23T06:19:22.937022+00:00",
+  "seed": 42,
+  "bootstrap_repeats": 1000,
+  "intervals": "paired RMSE differences; 95% percentile; no multiple-testing correction",
+  "surface_proxy": "NDVI/NDBI thresholds are not Dynamic World labels",
+  "spatial_interpretation": "Retrospective diagnostic; test data never used for hyperparameter selection"
+}

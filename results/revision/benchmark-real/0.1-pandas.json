@@ -1,0 +1,26 @@
+[
+  {
+    "repeat": 0,
+    "phase": "first_action",
+    "seconds": 0.1788331059999564,
+    "cpu_seconds": 0.16999999999999993,
+    "peak_process_tree_bytes": 94359552,
+    "startup_seconds": 0.2983091070000228
+  },
+  {
+    "repeat": 1,
+    "phase": "warm_action",
+    "seconds": 0.1678328150001107,
+    "cpu_seconds": 0.18000000000000016,
+    "peak_process_tree_bytes": 112766976,
+    "startup_seconds": 0.2983091070000228
+  },
+  {
+    "repeat": 2,
+    "phase": "warm_action",
+    "seconds": 0.0965820049998456,
+    "cpu_seconds": 0.08999999999999986,
+    "peak_process_tree_bytes": 116359168,
+    "startup_seconds": 0.2983091070000228
+  }
+]

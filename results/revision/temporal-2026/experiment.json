@@ -1,0 +1,26 @@
+{
+  "created_at": "2026-11-22T23:09:19.026002+00:00",
+  "data_sha256": "85443be59bd16fcbb387b5c2e48a0b4b19fc78063174fe180995970e3d137dbf",
+  "start": "2026-01-01",
+  "last_observed": "2026-11-09",
+  "description": "Frozen pre-2026 models; genuinely later observations, no retraining",
+  "models": [
+    {
+      "model": "LSTM",
+      "rows": 7156,
+      "load_seconds": 0.7445877599998312,
+      "cold_prediction_seconds": 0.523994428999913,
+      "warm_prediction_seconds": 0.0585071099999368,
+      "model_version": "a2b118b700d65c7355f0ad4b72110412e4fbd35bec1f43199d550416ec56fbc7"
+    },
+    {
+      "model": "XGBoost",
+      "rows": 7156,
+      "load_seconds": 0.024084797000114122,
+      "cold_prediction_seconds": 0.023983524999948713,
+      "warm_prediction_seconds": 0.02384167099990009,
+      "model_version": "3dbea3c085c552255453fd5c689989cb09089c6ca1347648d3baceeac686b4e4"
+    }
+  ],
+  "rows": 21468
+}

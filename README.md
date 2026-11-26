@@ -1,120 +1,82 @@
-# Güncellenmiş araştırma sürümü
+# Türkiye Yüzey Sıcaklığı Atlası
 
-Önce **GELISTIRME_DURUMU.md** dosyasındaki kapsamı ve tamamlanmamış işleri okuyun. Eski pilot raporu üç tek-tarihli sahnenin arşividir. Güncel çok yıllı sonuçlar results/summer-trial içindedir.
+MODIS il ortalamalarıyla 81 ilde zamansal tahmin; İstanbul, Erzurum ve Antalya'da Landsat/Sentinel tabanlı mekânsal model karşılaştırması. LST **yüzey sıcaklığıdır**, meteorolojik hava sıcaklığı değildir.
 
-Windows PowerShell'de proje kökünde `./setup.ps1` temiz Python 3.12 ortamını kurar ve testleri çalıştırır. Sonraki komutlarda `.venv/Scripts/python` kullanın.
+Bu geliştirme paketi 24 Kasım 2026 tarihli inceleme sürümüdür. Mevcut `data/`, `models/` ve eski deney sonuçları korunmuştur. 2026 gözlemleri `results/revision/incoming/` altında ayrı aday veridir. GitHub'a push veya kullanıcının veritabanında değişiklik yapılmamıştır.
 
-```powershell
-.\.venv\Scripts\python scripts/spatial_research.py --data data/summer.csv --out results/summer-trial
-.\.venv\Scripts\python scripts/forecast.py --data data/modis-multi.csv --mode common
-.\.venv\Scripts\python scripts/score_temporal.py
-.\.venv\Scripts\python scripts/run_update.py
-```
+## İlk açılış
 
-Veritabanını güncellemek için DATABASE_URL tanımlayıp son komuta `--publish` ekleyin. Snapshot değiştiğinde çevrimdışı Atlas için web dizininde `npm run build` çalıştırıp dist/index.html dosyasını Atlas.html olarak kopyalayın. API yeni sonuçları doğrudan veritabanından okur.
+ZIP'i **yeni bir klasöre** çıkar. Yeni arayüz ve 2026 aday veri incelemesi için `Atlas_2026_Aday.html` dosyasını tarayıcıda aç. Kurulum veya hesap girişi gerekmez. Bu dosyanın açılması veritabanına veri yayımlamaz. `Atlas.html` önceki teslimin korunmuş arşividir.
 
-# Türkiye yüzey sıcaklığı analiz ve tahmin sistemi
+## Python kurulumu ve doğrulama
 
-**Başlangıç:** ZIP dosyasını klasöre çıkarıp **Atlas.html** dosyasını açın. Kurulum veya Google hesabı gerektirmez. İstanbul, Erzurum ve Antalya’yı seçerek ölçülen LST’yi, tahminin hedef dönemini ve görülmemiş veri üzerindeki hataları inceleyebilirsiniz. Diğer illerin sınırları ve veri durumları gösterilir. Projedeki çalıştırılmış deneylerin kapsamı ve sonuçları **DENEY_RAPORU.md** içindedir.
-
-## Uygulamayı veritabanıyla çalıştırma
-
-Windows 11 / Docker Desktop için PowerShell komutları. Terminali bu dosyanın olduğu klasörde açın.
+Windows 11'de Python **3.12** kurulu olmalı. Proje kökünde PowerShell:
 
 ```powershell
-$env:LST_DB_PASSWORD = [guid]::NewGuid().ToString("N")
-docker compose up --build -d
-docker compose ps
-Start-Process http://localhost:5274
+.\setup.ps1
 ```
 
-İlk kurulumda konteyner imajları indirilir. Parolanızı geri kullanmak için saklayın. Aynı veritabanı birimi varken sonraki açılışlarda aynı parolayı kullanın. Kapatmak için `docker compose down`. Seed görevi tek işlemde sonuçları ve 81 il geometrisini yazar. Tekrar çalışması il kaydını günceller. Web arayüzü aynı sunucunun API’sinden seçili ilin sonuçlarını alır.
-
-| Adres | Yanıt |
-|---|---|
-| /api/iller | Kapsamdaki iller |
-| /api/iller/Antalya | Pilot hücreler, geçmiş seri, tahminler, metrikler |
-| /api/konum?lon=30.70&lat=36.89 | PostGIS nokta–poligon sorgusunda Antalya |
-
-## Araştırma ortamı
-
-Python 3.12 önerilir. Windows için sanal ortamı etkinleştirmeden:
+Betik çalıştırma politikası izin vermiyorsa sistem politikasını değiştirmeden aynı adımları elle çalıştır:
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python -m pip install -r requirements.txt
-.\.venv\Scripts\python scripts/spatial_train.py
-.\.venv\Scripts\python scripts/forecast.py
-.\.venv\Scripts\python scripts/forecast.py --mode multi --data data/modis-multi.csv
-.\.venv\Scripts\python scripts/confidence.py
+$env:KERAS_BACKEND = "jax"
+.\.venv\Scripts\python scripts/check_environment.py
+.\.venv\Scripts\python -m unittest discover -s tests -v
 ```
 
-Paketlenmiş CSV’ler bu komutlarla doğrudan kullanılabilir. `models/` içinde eğitilmiş modeller, `results/` içinde bağımsız test tahminleri, doğrulama sonuçları ve güven aralıkları vardır. Joblib modelleri için eğitim ortamındaki scikit-learn sürümü **1.8.0** kullanılmıştır. Keras 3 modeli JAX CPU arka ucunu kullanır.
+Python/Keras/JAX sürümleri kayıtlı modellerle birlikte sabitlenmiştir. Başka sürümde `input_axes` hatasını bastırmak için initializer yapılandırmasını değiştirmeyin. `compile=False` yükleme korunmuştur; eksik/bozuk sürüm dosyası artık yüklemeyi reddeder.
 
-Yeni gözlemleri aynı CSV şemasına ekledikten sonra yeniden eğitim gerektirmeyen çıkarım:
+Linux Python 3.12 ortamında 32 test geçti. **Bu kullanıcının Windows bilgisayarında kurulum henüz çalıştırılmadı.** `setup.ps1` ortam ve test kayıtlarını `results/local-validation/` altında üretir. Windows CI işi de hazırdır; depoya gönderilmediğinden yeni CI çalışması henüz yoktur.
+
+## Dosya ve sonuç rehberi
+
+| Yol | İçerik |
+|---|---|
+| `DUZELTME_TAKIBI.md` | 30 madde için dosya, gerekçe, test ve açık durum |
+| `DENEY_RAPORU.md` | Güncel bulgular, sınırlar ve tekrar komutları |
+| `docs/GEE_KURULUM.md` | Kendi hesabında yapacağın Earth Engine kurulumu |
+| `docs/SUNUM.md` | Bulgulara dayalı sunum akışı |
+| `docs/archive/` | Önceki kılavuz ve raporlar |
+| `results/revision/climate/` | Köppen–Geiger sınıflarıyla 81 il ve iki dönem için test özeti |
+| `results/revision/diagnostics/` | İl, ufuk, mevsim, sıcak dönem ve güven aralıkları |
+| `results/revision/spatial-blocked/` | Eğitim içinde mekânsal bloklarla seçilen A/B modelleri |
+| `results/revision/temporal-2026/` | Eski modellerin yeni 2026 gözlemlerindeki testi |
+| `results/revision/unseen-provinces/` | Üç pilot il eğitim/doğrulama dışında bırakılan deney |
+| `results/revision/benchmark-real/` | 2.666.362 gerçek piksel, süre/CPU/RSS ölçümleri |
+| `results/verification/` | Gerçekten çalıştırılmış test ve tarama kayıtları |
+
+## Aday veri ve tahmin hazırlama
+
+Aşağıdaki komutlar yeni klasörlere yazar; mevcut arşivi veya etkin yayını değiştirmez. Node.js ve `web/` altında `npm ci` çevrimdışı pano derlemesi için gerekir.
 
 ```powershell
-.\.venv\Scripts\python scripts/predict.py data/modis.csv --output results/yeni-tahmin.csv
+.\.venv\Scripts\python scripts/data_quality.py results/revision/incoming/province-modis-2026.csv
+.\.venv\Scripts\python scripts/run_update.py --province-data results/revision/incoming/province-modis-2026.csv
 ```
 
-### Verileri kaynağından yeniden alma
+Çıktı `releases/<kimlik>/` içinde CSV'ler, `snapshot.json`, `manifest.json` ve `Atlas.html` içerir. Kimlikteki saat UTC'dir. Yeni dosya var olan bir yayınla birleştirilmez. `--no-build` yalnızca hazırlık/test için HTML derlemesini atlar.
 
-Aşağıdaki betikler çalışma dizini olarak proje kökünü kullanır. Ağ erişimi gerekir. ORNL istekleri önbelleğe alınır.
+**Etkinleştirme ayrı ve onay gerektiren bir işlemdir.** `run_update.py --activate ...` çevrimdışı işaretçiyi; `--activate ... --publish` veritabanı işaretçisini değiştirir. Veritabanı modu API için tek yetkili kaynaktır. HTML, sürümlü ve bağımsız bir rapor dosyasıdır. Burada bu komutlar kullanıcının sisteminde çalıştırılmadı.
 
-| Sıra | Komut (Python ile çalıştırın) | Üretilen veri |
-|---|---|---|
-| 1 | scripts/spatial_data.py | Üç pilotta Ağustos 2023 Landsat–Sentinel eşleşmeleri, her aday hücre için iki geçerlilik oranı |
-| 2 | scripts/topography.py | Hücrelerin yükseklik ve eğim özellikleri |
-| 3 | scripts/modis.py | 2003–2025 MODIS gündüz LST, tarih, koordinat, QC ve ham değer |
-| 4 | scripts/temporal_features.py | 2018–2025 LST, MOD09A1 indisleri, ERA5-Land hava ve çiy noktası sıcaklığı, topoğrafya |
-
-Mekânsal deney her seferinde bir ili dışarıda tutar. Hiperparametre seçimi diğer illerin mekânsal bloklarında yapılır. `points-*.csv` dosyalarındaki her satır test hücresi, gerçek sıcaklık ve tahmin içerir. Modeller dışlanan ilin adını taşır.
-
-Zamansal deney her hedefin tarihine göre bölünür. Tek değişkenli eğitim 2003–2021, doğrulama 2022–2023; çok değişkenli eğitim 2018–2022, doğrulama 2023; her ikisinde test 2024–2025’tir. Pencere seçimi 8, 16, 24 dönem arasından doğrulama RMSE’sine göre yapılır. Son girişten 1–4 kompozit sonrasına tahmin üretilir. Takvim yıl sonunda yeniden başladığı için nominal gün ufukları ile tarihler arasındaki gün sayısı bazen farklıdır. Panelde gerçek hedef başlangıç tarihi bulunur. Her test tahmininde yalnızca başlangıç döneminin sonuna dek bilinen girdiler kullanılır. Arşiv ürünlerinin yayın gecikmesi modellenmemiştir.
-
-### Earth Engine ile altı kaynak ve il ölçeğinde genişleme
-
-Earth Engine erişimi olan bir Google Cloud projesiyle bir kez `earthengine authenticate` çalıştırın. Aşağıdaki komutlardaki PROJE_KIMLIGI yerine kendi proje kimliğinizi girin.
+## Web ve API geliştirme
 
 ```powershell
-python scripts/earthengine_export.py --project PROJE_KIMLIGI --mode spatial --city Antalya --year 2023
-python scripts/earthengine_export.py --project PROJE_KIMLIGI --mode temporal --city Antalya --year 2023
-```
-
-Mekânsal dışa aktarım yaz aylarında sekiz günlük kompozitler üretir. Landsat LST, Sentinel-2 indisleri, SRTM, Dynamic World yapılaşma olasılığı ve ERA5-Land değişkenleri 300 m hücrelerde örneklenir. Zamansal dışa aktarım MODIS’i kendi ızgarasında işler, ardından il ortalaması ve kapsam oranını kaydeder. 2018 sonrası çevresel özellikler eklenir. `--city ALL` seçilen yıl için 81 ayrı görevi başlatır. Earth Engine Tasks üzerinden durumunu izleyin. Tam araştırma için mekânsal ihracatı 2018–2025’te üç pilotta, zamansal ihracatı 2003–2025’te seçili illerde tekrarlayın. Drive/LST_Turkiye CSV’lerini bir klasöre indirin.
-
-```powershell
-python scripts/import_ee.py indirilen_csv deney_ee
-cd deney_ee
-python ../scripts/spatial_train.py
-python ../scripts/forecast.py --data data/modis.csv
-python ../scripts/forecast.py --data data/modis.csv --mode multi
-```
-
-A/B/C/D grupları veri sütunlarına göre çalışır. C grubunda Dynamic World ürününün dokuz sınıf olasılığı kullanılır. D grubuna hava ve çiy noktası sıcaklığı eklenir. İllerin model eğitimine yetecek sayıda ve farklı yıllardan kayıt içermesi gerekir. İl serileri ile paketteki tek piksel serileri ayrı deney dizinlerinde tutulur. Yeni bir il ortalaması modeli yayımlanırken arayüzdeki tek piksel açıklaması da güncellenmelidir.
-
-### Web arayüzünü yeniden üretme
-
-```powershell
-python scripts/snapshot.py
 cd web
 npm ci
-npm run build
-Copy-Item dist/index.html ../Atlas.html -Force
+npm run dev
 ```
 
-### Airflow ve Spark
+API modu `/api` isteklerini `localhost:5274` adresine yönlendirir. API hazır değilse anlaşılır hata gösterir; sessizce eski snapshot'a dönmez. Bağımsız HTML için `npm run build:offline` kullanılabilir. Bu komut varsayılan olarak korunmuş eski snapshot'ı kullanır; yeni veriyle HTML için yukarıdaki `run_update.py` yolunu kullan.
 
-`airflow/lst_pipeline.py` Airflow 2.10 için elle tetiklenen pilot iş akışıdır. Linux/WSL'de Airflow'un kendi ortamında DAG dosyasını DAG dizinine yerleştirin. `LST_ROOT` mutlak proje yolu, `LST_PYTHON` ise araştırma ortamının Python çalıştırılabilir dosyasıdır. DAG mekânsal indirme/eğitim ile MODIS indirme/eğitimini paralel yürütür ve sonuçları panoya hazırlar.
+API .NET 10 ve PostgreSQL/PostGIS gerektirir. `/health/live` süreç sağlığını, `/health` veritabanı ve etkin yayını denetler. `ConnectionStrings__Lst` bağlantısını kendi ortamında tanımlamalısın. Şifreyi kaynak koda ekleme. `dotnet test api.Tests` veritabanı gerektirmeyen hata/sözleşme testlerini çalıştırır.
 
-`scripts/benchmark.py data/modis.csv pandas` ve aynı komutun `spark` seçeneği aynı il-yıl ortalamalarını üretir. Spark için Java 17+ ve PySpark gerekir. Küçük pilotta süreye Spark oturumunun başlatılması dahildir.
+Docker için `compose.yaml` hazırdır; `LST_DB_PASSWORD` değerini kendin sağlarsın. İlk oluşturma/şema ve yayın işlemleri veri yazdığı için önce incele ve onayla. `scripts/test_compose.ps1 -Run` yalnızca yeni `lst-validation` test projesi içindir. **Docker Compose ve Airflow paneli bu ortamda uçtan uca çalıştırılamadı; başarılı oldukları iddia edilmiyor.**
 
-### Veri kaynakları
+## Bekleyenler
 
-- Landsat 8/9 Collection 2 L2 — USGS / Microsoft Planetary Computer, ST_B10 ve QA bantları. https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
-- Copernicus Sentinel-2 L2A — Earth Search, yansıtım COG’ları ve SCL. https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a
-- NASA LP DAAC Terra MOD11A2 ve MOD09A1 — ORNL DAAC TESViS REST. https://modis.ornl.gov/data/modis_webservice.html
-- Terrain Tiles Skadi — Mapzen/AWS, birleştirilmiş sayısal yükseklik ürünü. Pilot topoğrafyası bu üründendir. https://registry.opendata.aws/terrain-tiles/
-- Open-Meteo Historical Weather API / Copernicus ERA5-Land. https://open-meteo.com/en/docs/historical-weather-api
-- İl geometrileri — Natural Earth 1:10m Admin 1, kamu malı, görselleştirme için sadeleştirildi. https://www.naturalearthdata.com/downloads/10m-cultural-vectors/
-- GEE koleksiyonları — LANDSAT/LC08/C02/T1_L2, LANDSAT/LC09/C02/T1_L2, COPERNICUS/S2_SR_HARMONIZED, MODIS/061/MOD11A2, USGS/SRTMGL1_003, GOOGLE/DYNAMICWORLD/V1, ECMWF/ERA5_LAND/DAILY_AGGR. https://developers.google.com/earth-engine/datasets/catalog
+- Dynamic World + ERA5-Land gerçek aktarımı ve C/D deneyleri: **Earth Engine erişimi bekleniyor**.
+- Windows 11'de kullanıcı kurulumu ve Docker/Airflow dağıtım doğrulaması.
+- Yeni verinin etkin arşive alınması, veritabanı şeması/yayını ve Git push: **kullanıcı onayı bekleniyor**.
+- Antalya'da doğrulanmış hata azalması ve resmi iklim sınıflarına göre değerlendirme: açık araştırma konuları. Termal kümeler resmi iklim sınıfları değildir.

@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "time": "2026-11-23T06:42:11.260873+00:00",
+  "database": "isolated temporary PostgreSQL/PostGIS",
+  "http_contract_checks": 10,
+  "rollback": true,
+  "database_outage_503": true,
+  "reconnect": true,
+  "restart_preserves_rows": true,
+  "coverage_drop_rejected": true,
+  "snapshot_api_forecasts_equal": true,
+  "browser": true,
+  "release_id": "2026-11-23T06-41-02.888387+00-00-321327af"
+}

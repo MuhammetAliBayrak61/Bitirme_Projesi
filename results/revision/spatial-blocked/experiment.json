@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-11-22T23:02:52.012074+00:00",
+  "seed": 42,
+  "groups": {
+    "A": [
+      "ndvi",
+      "ndbi"
+    ],
+    "B": [
+      "ndvi",
+      "ndbi",
+      "height",
+      "slope"
+    ]
+  },
+  "rows_before": 19600,
+  "rows_complete": 13370,
+  "split": "held-out city AND held-out 2024-2025; inner validation groups all dates of site",
+  "selection": "training_only",
+  "interpretation": "Existing test period; exploratory reanalysis, not a new confirmation set"
+}

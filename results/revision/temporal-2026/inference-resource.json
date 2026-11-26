@@ -1,0 +1,11 @@
+{
+  "batched_two_model_inference": {
+    "rows": 648,
+    "seconds": 2.6260854199999812
+  },
+  "process_wall_seconds": 6.460771937000004,
+  "peak_process_tree_bytes": 494600192,
+  "cpu_seconds": 8.61,
+  "per_model_timings": "results/revision/temporal-2026/timings.csv",
+  "scope": "Combined CLI process incl. Python/JAX/model load; RSS not GPU memory"
+}

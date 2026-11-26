@@ -1,42 +1,50 @@
-"""Güncel CSV verileriyle batch tahmin üret, kapsam/yeterlik kontrolü ve sürüm bilgisini yaz."""
+"""Generate a candidate forecast file; activation is a separate explicit action."""
 from pathlib import Path
 import argparse
-import json
-import os
 import pandas as pd
 from predict import forecast
 from forecast import calendar
+from registry import verify, sha256
+from data_quality import validate
 
-def run(mode,source):
-    df=pd.read_csv(source,parse_dates=["date"])
-    if df.duplicated(["city","date"]).any():raise ValueError("Tekrarlanan il ve dönem")
-    if mode=="province":
-        if "scope" not in df or set(df.scope)!={"province"}:raise ValueError("İl ortalaması gerekli")
-        use=df.complete_tiles & (df.valid_fraction>=.5)
-        df.loc[~use,"lst"]=float("nan")
-        if not df.lst.equals(pd.read_csv(source).lst):raise ValueError("Kalite kontrolünden geçmeyen hedefleri önce maskeleyin")
-    scores=pd.read_json(f"results/temporal-{mode}.json")
-    output=forecast(source,mode)
-    if output.empty:output=pd.DataFrame(columns=["city","h","model","date","origin","prediction"])
-    output=output.merge(scores[["city","h","model","n","rmse"]],on=["city","h","model"],how="left",validate="many_to_one")
-    info={}
-    for m in ["XGBoost","LSTM"]:
-        info[m]=json.loads(Path(f"models/{mode}-{m}-version.json").read_text(encoding="utf8"))
-    for model,group in output.groupby("model"):
-        output.loc[group.index,"version"]=info[model]["version"]
-        output.loc[group.index,"trained_at"]=info[model]["trained_at"]
-    # Son sekiz takvim döneminde en az dört gözlem ve eşleşmiş testte en az 12 örnek.
-    coverage={}
-    for city,g in df.groupby("city"):
-        grid=calendar(g.date.max().year)
-        end=grid.get_loc(g.date.max())
-        coverage[city]=int(g.set_index("date").lst.reindex(grid[max(0,end-7):end+1]).count())
-    output["recent_n"]=output.city.map(coverage)
-    output["publishable"]=(output.recent_n>=4)&(output.n.fillna(0)>=12)&output.prediction.between(-50,85)
-    output["scope"]="province" if mode=="province" else "point"
-    path=Path(f"results/latest-{mode}.csv")
-    tmp=path.with_suffix(".tmp");output.to_csv(tmp,index=False);os.replace(tmp,path)
-    print(mode,len(output),int(output.publishable.sum()),flush=True)
-if __name__=="__main__":
-    p=argparse.ArgumentParser();p.add_argument("--mode",required=True,choices=["uni","multi","common","province"]);p.add_argument("--data",type=Path,required=True)
-    a=p.parse_args();run(a.mode,a.data)
+def run(mode, source, output, *, models_dir='models', scores_dir='results', as_of=None):
+    df = validate(pd.read_csv(source), mode)
+    scores = pd.read_json(Path(scores_dir) / f'temporal-{mode}.json')
+    result = forecast(source, mode, models_dir, latest_valid=True)
+    result = result.merge(scores[['city','h','model','n','rmse']], on=['city','h','model'], how='left', validate='many_to_one')
+    for model, group in result.groupby('model'):
+        info = verify(mode, model, Path(models_dir))
+        result.loc[group.index, 'version'] = info['version']
+        result.loc[group.index, 'trained_at'] = info['trained_at']
+    coverage = {}
+    for city, g in df.groupby('city'):
+        valid = g.loc[g.lst.notna(), 'date']
+        if valid.empty:
+            coverage[city] = 0
+            continue
+        grid = calendar(valid.max().year)
+        end = grid.get_loc(valid.max())
+        coverage[city] = int(g.set_index('date').lst.reindex(grid[max(0,end-7):end+1]).count())
+    result['recent_n'] = result.city.map(coverage)
+    result['publishable'] = (result.recent_n >= 4) & (result.n.fillna(0) >= 12) & result.prediction.between(-50,85)
+    today = pd.Timestamp(as_of or pd.Timestamp.now(tz='UTC').date())
+    result['is_archived'] = pd.to_datetime(result.date) < today
+    result['data_age_days'] = (today - pd.to_datetime(result.origin)).dt.days
+    result['scope'] = 'province' if mode == 'province' else 'point'
+    result['data_version'] = sha256(source)
+    result['source_file'] = str(source)
+    output = Path(output)
+    if output.exists():
+        raise FileExistsError(f'Aday çıktı zaten var: {output}')
+    output.parent.mkdir(parents=True,exist_ok=True)
+    result.to_csv(output,index=False)
+    return result
+
+if __name__ == '__main__':
+    p=argparse.ArgumentParser()
+    p.add_argument('--mode', required=True, choices=['uni','multi','common','province'])
+    p.add_argument('--data', type=Path, required=True)
+    p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--models-dir', default='models')
+    a=p.parse_args()
+    print(run(a.mode,a.data,a.output,models_dir=a.models_dir).shape)

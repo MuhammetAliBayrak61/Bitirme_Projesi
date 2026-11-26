@@ -5,7 +5,7 @@ import pandas as pd
 
 def records(frame):
     return json.loads(frame.to_json(orient="records",double_precision=4,force_ascii=False))
-def main():
+def build_snapshot(latest_dir=Path("results"), province_data=Path("data/province-modis.csv"), release=None):
     features=json.loads(Path("data/provinces.geojson").read_text(encoding="utf8"))["features"]
     regions={}
     for file in Path("data").glob("spatial-*.csv"):
@@ -29,11 +29,19 @@ def main():
         for city,g in pd.read_csv(f"results/future-{mode}.csv").groupby("city"):
             values=g[["date","h","origin","model","prediction"]].copy()
             baseline=g[g.model=="XGBoost"][["date","h","origin","baseline"]].dropna().rename(columns={"baseline":"prediction"}).assign(model="SeasonalNaive")
-            regions[city].setdefault("future",[]).extend(records(pd.concat([values,baseline]).assign(mode=mode)))
+            regions[city].setdefault("archiveFuture",[]).extend(records(pd.concat([values,baseline]).assign(mode=mode)))
     from dashboard_data import add
-    add(regions)
-    path=Path("web/src/snapshot.json")
-    tmp=path.with_suffix(".tmp")
-    tmp.write_text(json.dumps(dict(features=features,regions=regions),ensure_ascii=False,separators=(",",":"),allow_nan=False),encoding="utf8")
-    tmp.replace(path)
+    add(regions,latest_dir,province_data)
+    for r in regions.values():
+        r["future"]=[run for run in r.get("runs",[]) if run["mode"]!="province" and run["publishable"]]
+    return dict(features=features,regions=regions,release=release or {})
+
+def main():
+    import argparse
+    from provenance import atomic_json, now
+    p=argparse.ArgumentParser();p.add_argument("--output",type=Path,required=True)
+    p.add_argument("--latest-dir",type=Path,default=Path("results"))
+    a=p.parse_args()
+    if a.output.exists():raise FileExistsError("Mevcut snapshot üzerine yazılmaz")
+    atomic_json(a.output,build_snapshot(a.latest_dir,release=dict(id="manual-"+now(),created_at=now())))
 if __name__=="__main__": main()

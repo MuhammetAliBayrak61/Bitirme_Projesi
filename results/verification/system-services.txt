@@ -1,0 +1,566 @@
+The files belonging to this database system will be owned by user "agent".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "C".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory /tmp/lst-integration-w1lza9bu/pg ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default "max_connections" ... 100
+selecting default "shared_buffers" ... 128MB
+selecting default time zone ... Europe/Istanbul
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+Success. You can now start the database server using:
+
+    /workspace/scratch/b53d898cced8/tooling/pg/usr/lib/postgresql/17/bin/pg_ctl -D /tmp/lst-integration-w1lza9bu/pg -l logfile start
+
+2026-11-23 09:42:04.597 +03 [103] LOG:  starting PostgreSQL 17.12 (Debian 17.12-0+deb13u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-11-23 09:42:04.598 +03 [103] LOG:  listening on IPv4 address "127.0.0.1", port 55432
+2026-11-23 09:42:04.599 +03 [106] LOG:  database system was shut down at 2026-11-23 09:42:04 +03
+2026-11-23 09:42:04.602 +03 [103] LOG:  database system is ready to accept connections
+2026-11-23 09:42:05.475 +03 [113] ERROR:  invalid GeoJson representation
+2026-11-23 09:42:05.475 +03 [113] STATEMENT:  INSERT INTO lst_release_province(release_id,name,geom,result)
+	                VALUES($1,$2,ST_Multi(ST_SetSRID(ST_GeomFromGeoJSON($3),4326)),$4::jsonb)
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://127.0.0.1:5274
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /workspace/scratch/b53d898cced8/improvements/api
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/health - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /health'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '<>f__AnonymousType1`2' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /health'
+info: Lst.Api[0]
+      GET /health 200 136ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/health - 200 - application/json;+charset=utf-8 190.5280ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/health/live - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /health/live'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '<>f__AnonymousType0`1' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /health/live'
+info: Lst.Api[0]
+      GET /health/live 200 7ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/health/live - 200 - application/json;+charset=utf-8 8.1158ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/health - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /health'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '<>f__AnonymousType1`2' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /health'
+info: Lst.Api[0]
+      GET /health 200 3ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/health - 200 - application/json;+charset=utf-8 4.0728ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/atlas'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/atlas'
+info: Lst.Api[0]
+      GET /api/atlas 200 36ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - 200 107968 application/json 36.7822ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type 'List`1' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller'
+info: Lst.Api[0]
+      GET /api/iller 200 5ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller - 200 - application/json;+charset=utf-8 6.5103ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller/{name}'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller/{name}'
+info: Lst.Api[0]
+      GET /api/iller/Antalya 200 14ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 173260 application/json 15.0813ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Lst.Api[0]
+      GET /api/tahmin-katmani 200 13ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 365038 application/json 13.4714ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller/MISSING - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller/{name}'
+info: Microsoft.AspNetCore.Http.HttpResults.ProblemHttpResult[1]
+      Setting HTTP status code 404.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller/{name}'
+info: Lst.Api[0]
+      GET /api/iller/MISSING 404 11ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller/MISSING - 404 - application/problem+json 11.3363ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/konum?lat=200&lon=30 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/konum'
+info: Microsoft.AspNetCore.Http.HttpResults.ProblemHttpResult[1]
+      Setting HTTP status code 400.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/konum'
+info: Lst.Api[0]
+      GET /api/konum 400 2ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/konum?lat=200&lon=30 - 400 - application/problem+json 2.4853ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=OLD - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller/{name}'
+info: Microsoft.AspNetCore.Http.HttpResults.ProblemHttpResult[1]
+      Setting HTTP status code 409.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller/{name}'
+info: Lst.Api[0]
+      GET /api/iller/Antalya 409 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=OLD - 409 - application/problem+json 0.7894ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=OLD - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Microsoft.AspNetCore.Http.HttpResults.ProblemHttpResult[1]
+      Setting HTTP status code 409.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Lst.Api[0]
+      GET /api/tahmin-katmani 409 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=OLD - 409 - application/problem+json 0.9266ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Lst.Api[0]
+      GET /api/tahmin-katmani 200 12ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 365038 application/json 13.0528ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/ - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/index.html'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/index.html'
+info: Lst.Api[0]
+      GET /index.html 200 13ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/index.html - 200 - text/html 13.8169ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - - -
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DaPbe0z9.js'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DaPbe0z9.js'
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DAV04TAz.css'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DAV04TAz.css'
+info: Lst.Api[0]
+      GET /assets/index-DAV04TAz.css 200 5ms
+info: Lst.Api[0]
+      GET /assets/index-DaPbe0z9.js 200 5ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - 200 - text/css 5.3985ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - 200 - text/javascript 5.3968ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/atlas'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/atlas'
+info: Lst.Api[0]
+      GET /api/atlas 200 17ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - 200 - application/json 17.3629ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller/{name}'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller/{name}'
+info: Lst.Api[0]
+      GET /api/iller/Antalya 200 4ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 4.2433ms
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Lst.Api[0]
+      GET /api/tahmin-katmani 200 43ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 44.0672ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller/İstanbul?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller/{name}'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller/{name}'
+info: Lst.Api[0]
+      GET /api/iller/%C4%B0stanbul 200 3ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller/İstanbul?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 3.8985ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/ - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/index.html'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/index.html'
+info: Lst.Api[0]
+      GET /index.html 200 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/index.html - 200 - text/html 0.8013ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DaPbe0z9.js'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DaPbe0z9.js'
+info: Lst.Api[0]
+      GET /assets/index-DaPbe0z9.js 200 3ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - 200 - text/javascript 3.4059ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DAV04TAz.css'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DAV04TAz.css'
+info: Lst.Api[0]
+      GET /assets/index-DAV04TAz.css 200 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - 200 - text/css 0.4823ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/atlas'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/atlas'
+info: Lst.Api[0]
+      GET /api/atlas 200 23ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - 200 - application/json 23.7652ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller/{name}'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller/{name}'
+info: Lst.Api[0]
+      GET /api/iller/Antalya 200 4ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 4.1710ms
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Lst.Api[0]
+      GET /api/tahmin-katmani 200 34ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 34.6541ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/ - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/index.html'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/index.html'
+info: Lst.Api[0]
+      GET /index.html 200 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/index.html - 200 - text/html 0.8725ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - - -
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DAV04TAz.css'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DAV04TAz.css'
+info: Lst.Api[0]
+      GET /assets/index-DAV04TAz.css 200 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - 200 - text/css 0.7714ms
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DaPbe0z9.js'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DaPbe0z9.js'
+info: Lst.Api[0]
+      GET /assets/index-DaPbe0z9.js 200 3ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - 200 - text/javascript 3.8360ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/atlas'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/atlas'
+info: Lst.Api[0]
+      GET /api/atlas 200 9ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - 200 - application/json 10.1712ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Lst.Api[0]
+      GET /api/tahmin-katmani 200 18ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 19.2506ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/ - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/index.html'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/index.html'
+info: Lst.Api[0]
+      GET /index.html 200 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/index.html - 200 - text/html 0.7363ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - - -
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DAV04TAz.css'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DAV04TAz.css'
+info: Lst.Api[0]
+      GET /assets/index-DAV04TAz.css 200 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - 200 - text/css 0.3628ms
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DaPbe0z9.js'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DaPbe0z9.js'
+info: Lst.Api[0]
+      GET /assets/index-DaPbe0z9.js 200 2ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - 200 - text/javascript 2.1140ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/atlas'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/atlas'
+info: Lst.Api[0]
+      GET /api/atlas 200 9ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - 200 - application/json 9.7153ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller/{name}'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller/{name}'
+info: Lst.Api[0]
+      GET /api/iller/Antalya 200 5ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 5.5765ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Erzurum?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller/{name}'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller/{name}'
+info: Lst.Api[0]
+      GET /api/iller/Erzurum 200 4ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Erzurum?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 4.6564ms
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Lst.Api[0]
+      GET /api/tahmin-katmani 200 34ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 34.7240ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/ - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/index.html'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/index.html'
+info: Lst.Api[0]
+      GET /index.html 200 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/index.html - 200 - text/html 0.6368ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - - -
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - - -
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DAV04TAz.css'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DAV04TAz.css'
+info: Lst.Api[0]
+      GET /assets/index-DAV04TAz.css 200 0ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DAV04TAz.css - 200 - text/css 0.4802ms
+info: Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware[2]
+      Sending file. Request path: '/assets/index-DaPbe0z9.js'. Physical path: '/workspace/scratch/b53d898cced8/improvements/api/wwwroot/assets/index-DaPbe0z9.js'
+info: Lst.Api[0]
+      GET /assets/index-DaPbe0z9.js 200 2ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/assets/index-DaPbe0z9.js - 200 - text/javascript 2.4001ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/atlas'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/atlas'
+info: Lst.Api[0]
+      GET /api/atlas 200 8ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/atlas - 200 - application/json 8.2382ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller/{name}'
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller/{name}'
+info: Lst.Api[0]
+      GET /api/iller/Antalya 200 6ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller/Antalya?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 6.5376ms
+info: Microsoft.AspNetCore.Http.Result.ContentResult[2]
+      Write content with HTTP Response ContentType of application/json
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/tahmin-katmani'
+info: Lst.Api[0]
+      GET /api/tahmin-katmani 200 22ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/tahmin-katmani?release=2026-11-23T06-41-02.888387%2B00-00-321327af - 200 - application/json 22.3622ms
+2026-11-23 09:42:10.970 +03 [103] LOG:  received fast shutdown request
+2026-11-23 09:42:10.970 +03 [103] LOG:  aborting any active transactions
+2026-11-23 09:42:10.970 +03 [268] FATAL:  terminating connection due to administrator command
+2026-11-23 09:42:10.970 +03 [161] FATAL:  terminating connection due to administrator command
+2026-11-23 09:42:10.971 +03 [103] LOG:  background worker "logical replication launcher" (PID 109) exited with exit code 1
+2026-11-23 09:42:10.973 +03 [104] LOG:  shutting down
+2026-11-23 09:42:10.973 +03 [104] LOG:  checkpoint starting: shutdown immediate
+2026-11-23 09:42:10.977 +03 [104] LOG:  checkpoint complete: wrote 1363 buffers (8.3%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.005 s, sync=0.001 s, total=0.005 s; sync files=132, longest=0.001 s, average=0.000 s; distance=11586 kB, estimate=11586 kB; lsn=0/206D330, redo lsn=0/206D330
+2026-11-23 09:42:10.980 +03 [103] LOG:  database system is shut down
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/health - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /health'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /health'
+info: Microsoft.AspNetCore.Http.HttpResults.ProblemHttpResult[1]
+      Setting HTTP status code 503.
+warn: Lst.Api[0]
+      Database request failed: PostgresException
+info: Lst.Api[0]
+      GET /health 503 7ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/health - 503 - application/problem+json 7.3057ms
+2026-11-23 09:42:11.010 +03 [322] LOG:  starting PostgreSQL 17.12 (Debian 17.12-0+deb13u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-11-23 09:42:11.010 +03 [322] LOG:  listening on IPv4 address "127.0.0.1", port 55432
+2026-11-23 09:42:11.013 +03 [325] LOG:  database system was shut down at 2026-11-23 09:42:10 +03
+2026-11-23 09:42:11.015 +03 [322] LOG:  database system is ready to accept connections
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/health - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /health'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '<>f__AnonymousType1`2' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /health'
+info: Lst.Api[0]
+      GET /health 200 3ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/health - 200 - application/json;+charset=utf-8 3.6001ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:5274/api/iller - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /api/iller'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type 'List`1' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /api/iller'
+info: Lst.Api[0]
+      GET /api/iller 200 1ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:5274/api/iller - 200 - application/json;+charset=utf-8 1.2612ms
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+2026-11-23 09:42:11.292 +03 [322] LOG:  received fast shutdown request
+2026-11-23 09:42:11.293 +03 [322] LOG:  aborting any active transactions
+2026-11-23 09:42:11.294 +03 [322] LOG:  background worker "logical replication launcher" (PID 328) exited with exit code 1
+2026-11-23 09:42:11.294 +03 [323] LOG:  shutting down
+2026-11-23 09:42:11.294 +03 [323] LOG:  checkpoint starting: shutdown immediate
+2026-11-23 09:42:11.294 +03 [323] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=5, longest=0.001 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/206D3A8, redo lsn=0/206D3A8
+2026-11-23 09:42:11.296 +03 [322] LOG:  database system is shut down

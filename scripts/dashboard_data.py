@@ -2,19 +2,23 @@
 import json
 from pathlib import Path
 import pandas as pd
-def rows(df):return json.loads(df.to_json(orient="records",double_precision=4,force_ascii=False))
-def add(regions):
+def rows(df):return json.loads(df.to_json(orient="records",double_precision=15,force_ascii=False))
+def add(regions,latest_dir=Path("results"),province_data=Path("data/province-modis.csv")):
     for mode in ["uni","multi","common","province"]:
-        path=Path(f"results/latest-{mode}.csv")
+        path=Path(latest_dir)/f"latest-{mode}.csv"
         if not path.exists():continue
         for city,g in pd.read_csv(path).groupby("city"):
             reg=regions.setdefault(city,{})
             reg.setdefault("runs",[]).extend(rows(g.assign(mode=mode)))
-    path=Path("data/province-modis.csv")
+    path=Path(province_data)
     if path.exists():
         for city,g in pd.read_csv(path).sort_values("date").groupby("city"):
             reg=regions.setdefault(city,{})
             reg["provinceHistory"]=rows(g[["date","lst","valid_fraction","valid_pixels","total_pixels","complete_tiles"]])
+    path=Path("results/temporal-province.json")
+    if path.exists():
+        for row in json.loads(path.read_text(encoding="utf8")):
+            regions.setdefault(row["city"],{}).setdefault("provinceScores",[]).append(row)
     for path in [Path("results/summer-trial/scores.csv"),Path("results/gee-trial/scores.csv")]:
         if path.exists():
             for city,g in pd.read_csv(path).groupby("city"):

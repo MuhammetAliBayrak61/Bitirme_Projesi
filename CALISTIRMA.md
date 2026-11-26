@@ -1,61 +1,23 @@
-# Kurulum ve güncelleme
+# Çalıştırma rehberi
 
-ZIP içindeki bütün klasörleri birlikte çıkarın. `Atlas.html` dosyası çevrimdışı açılır. Windows PowerShell'de proje klasörünü açıp `./setup.ps1` çalıştırın. Python 3.12 kurulu olmalıdır. Kurulum sabitlenmiş bağımlılıkları kurar ve testleri çalıştırır.
+Ana kurulum yolu kökteki `README.md` dosyasındadır. Önce paketi yeni klasöre çıkar, `Atlas_2026_Aday.html` ile görsel incele, ardından Python 3.12 ile `setup.ps1` çalıştır.
 
-## GitHub deposuna uygulama
+## Sorun giderme
 
-Git bundle, eski kök dizin yerleşimini düzelten commit ile araştırma güncellemesini içerir. Kullanıcı değişikliklerini kaybetmemek için temiz çalışma dizininde yeni dal açılır. PowerShell'de kendi depo klasörünüzde şu komutları çalıştırın. Bundle yolunu indirdiğiniz gerçek dosya yoluyla değiştirin.
+| Belirti | Yapılacak |
+|---|---|
+| ZIP indirilemiyor | Paylaşılan yeni dosya sayfasındaki İndir düğmesini kullan; eski sandbox bağlantısı farklıdır. |
+| `input_axes` veya sürüm hatası | Python 3.12 ve tam `requirements.txt`; farklı Python'daki `pip` yerine `.venv` içindeki Python'u kullan. |
+| Sürüm dosyası eksik/uyuşmuyor | Aynı güvenilir teslimin model ve preprocess dosyalarını birlikte geri getir; doğrulama kontrolünü kapatma. |
+| API modu boş/hata gösteriyor | `/health` adresini kontrol et; veritabanı veya etkin yayın yoksa 503 beklenir. |
+| HTTP 409 | Sayfa yüklenirken etkin yayın değişmiştir; sayfayı yenile. |
+| Geçmiş hedef tarihi | Arşiv tahminidir; bugünün hava sıcaklığı tahmini değildir. |
+| Aday çıktı zaten var | Eski sonucu koru, yeni bir `--out` / `--output` klasörü seç. |
+| Earth Engine erişim hatası | `docs/GEE_KURULUM.md`; giriş ve proje seçimini kendin yap. |
+| Docker şifre değişkeni eksik | `LST_DB_PASSWORD` değerini kendi terminalinde ayarla; repoya yazma. |
 
-```powershell
-git status
-git fetch "C:/indirme/Bitirme_Guncelleme.bundle" lst-pilot-dogrulama
-git switch -c lst-guncelleme FETCH_HEAD
-git push -u origin lst-guncelleme
-```
+Önceki Git bundle aktarım talimatları `docs/archive/CALISTIRMA_Onceki.md` içindedir. Yeni kurulum için gerekli değildir.
 
-Ardından GitHub'da bu daldan main'e Pull Request açın. Main dalında yeni değişiklikler varsa PR üzerinden karşılaştırın. Bundle, temel commit fcab532 ve sonraki güncelleme commitlerini içerir.
+## Veri kaybını önleme
 
-## Araştırmayı tekrar çalıştırma
-
-```powershell
-.\.venv\Scripts\python scripts/check_environment.py
-.\.venv\Scripts\python -m unittest discover -s tests -v
-.\.venv\Scripts\python scripts/spatial_research.py --data data/summer.csv --out results/summer-trial
-.\.venv\Scripts\python scripts/forecast.py --data data/modis-multi.csv --mode common
-.\.venv\Scripts\python scripts/score_temporal.py
-.\.venv\Scripts\python scripts/run_update.py
-```
-
-## Altı kaynaklı C/D deneyi
-
-Google Cloud projesi için Earth Engine erişimini etkinleştirin ve `.venv/Scripts/earthengine authenticate` ile kendi hesabınızda oturum açın.
-
-```powershell
-.\.venv\Scripts\python scripts/enrich_summer.py --project PROJE_KIMLIGI
-.\.venv\Scripts\python scripts/spatial_research.py --data data/summer-gee.csv --out results/gee-trial --require-all
-```
-
-GEE işlemleri dış serviste gerçek veriyle çalıştırılana kadar bu deneylerin sonucu hazır kabul edilmemelidir. Mekânsal pilot verisi Sentinel-2, eski çok değişkenli nokta serisi MOD09A1 kullanır. Bu kaynaklar veri dosyaları ve raporlarda ayrı belirtilir.
-
-## İl serisi ve yeni tahmin yayını
-
-```powershell
-.\.venv\Scripts\python scripts/province_archive.py --workers 4
-.\.venv\Scripts\python scripts/forecast.py --data data/province-modis.csv --mode province
-.\.venv\Scripts\python scripts/update_forecasts.py --mode province --data data/province-modis.csv
-.\.venv\Scripts\python scripts/run_update.py --publish
-```
-
-Veritabanı yayını için DATABASE_URL tanımlanmalıdır. Docker Compose kurulumunu README açıklar. Tahmin güncellemesi model ağırlıklarını yeniden eğitmeden çıkarım yapar. Yeniden eğitim için forecast.py kullanılır. API'nin `/api/tahmin-katmani` adresi yalnızca yayımlanabilir il tahminlerini döndürür.
-
-## Tekrarlı Spark deneyi
-
-Java 17+ ile `pip install pyspark==4.0.1 psutil` kurulumundan sonra Linux/WSL'de `python scripts/benchmark_repeated.py data/summer.csv` çalıştırın. Gerçek verinin %25, %50 ve %100 alt kümelerinde üçer tekrar yapılır. Süre ve Python/JVM süreç ağacının örneklenmiş tepe RSS değeri kaydedilir. Deney dosyası `results/benchmark/measurements.csv` olur. Bu ölçüm küçük veri için geçerlidir; ülke ölçeğindeki raster işlem maliyetini temsil etmez.
-
-Yerel Airflow zincirini Docker Desktop ile açmak için aynı veritabanı parolasını kullanarak aşağıdaki komutu çalıştırın. Airflow 2.10.5 ve ayrı Python 3.12 araştırma ortamı kurulur. Bu Compose profili bu çalışma ortamında yürütülememiştir.
-
-```powershell
-docker compose -f compose.yaml -f compose.research.yaml up --build -d
-```
-
-Airflow arayüzü http://localhost:8081 üzerindedir. `turkiye_lst_pilot` DAG'ını tetikleyin. Son görev tahminleri üreterek veritabanını günceller. GEE/81 il genişletme deneyi ayrı araştırma komutlarıyla yürütülür.
+Bu teslimde önceki veri/model dosyaları değiştirilmedi. Yeni deneyler ayrı klasörlerde. Bilgisayarında eski klasörün üzerine açmak yerine iki klasörü yan yana tut. Çalışan veritabanını silme, `docker compose down -v` kullanma ve yeni şemayı mevcut veritabanına onaysız uygulama.

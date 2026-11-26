@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_download_size_and_md5": true,
+  "cities": 81,
+  "classes": 7,
+  "fractions_sum_to_one": true,
+  "crop_reproduces_global_raster_scores": true,
+  "publication": "new derived results only"
+}
