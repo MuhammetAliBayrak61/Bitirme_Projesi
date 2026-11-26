@@ -12,6 +12,7 @@ jobs:
     env:
       KERAS_BACKEND: jax
       OPENBLAS_NUM_THREADS: '1'
+      PYTHONIOENCODING: utf-8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -29,7 +30,7 @@ jobs:
           name: environment-${{ matrix.os }}
           path: results/ci-environment.json
   api:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     services:
       postgres:
         image: postgis/postgis:17-3.5
